@@ -486,6 +486,16 @@ define Device/bananapi_bpi-r4-poe
 endef
 TARGET_DEVICES += bananapi_bpi-r4-poe
 
+define Device/beeconmini_seed-ac1
+  DEVICE_VENDOR := BeeconMini
+  DEVICE_MODEL := SEED AC1
+  DEVICE_DTS := mt7981b-beeconmini-seed-ac1
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs kmod-usb3 kmod-sfp kmod-xs2184 kmod-mt7981-firmware mt7981-wo-firmware
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+TARGET_DEVICES += beeconmini_seed-ac1
+
 define Device/beeconmini_seed-ac2
   DEVICE_VENDOR := BeeconMini
   DEVICE_MODEL := SEED AC2
