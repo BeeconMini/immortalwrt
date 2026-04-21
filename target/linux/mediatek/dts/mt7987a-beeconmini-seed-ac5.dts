@@ -1,0 +1,234 @@
+// SPDX-License-Identifier: (GPL-2.0 OR MIT)
+
+/dts-v1/;
+#include "mt7987a.dtsi"
+#include <dt-bindings/input/input.h>
+
+/ {
+	model = "BeeconMini SEED AC5";
+	compatible = "beeconmini,seed-ac5", "mediatek,mt7987a", "mediatek,mt7987";
+
+	aliases {
+		label-mac-device = &gmac0;
+		led-boot = &led_power;
+		led-failsafe = &led_power;
+		led-running = &led_power;
+		led-upgrade = &led_power;
+	};
+
+	chosen {
+		bootargs = "console=ttyS0,115200n1 \
+			    earlycon=uart8250,mmio32,0x11000000 \
+			    pci=pcie_bus_perf \
+			    root=PARTLABEL=rootfs rootfstype=squashfs,f2fs \
+			    rootwait fstools_partname_fallback_scan=1";
+	};
+
+	aliases {
+		led-boot = &led_sys;
+		led-failsafe = &led_sys;
+		led-running = &led_sys;
+		led-upgrade = &led_sys;
+	};
+
+	gpio-keys {
+		compatible = "gpio-keys";
+
+		reset {
+			label = "reset";
+			linux,code = <KEY_RESTART>;
+			gpios = <&pio 1 GPIO_ACTIVE_LOW>;
+			debounce-interval = <10>;
+		};
+	};
+
+	gpio-leds {
+		compatible = "gpio-leds";
+
+		led_sys: led@0 {
+			label = "led_sys";
+			gpios = <&pio 7 GPIO_ACTIVE_LOW>;
+		};
+
+		led_wan_2p5g: led@1 {
+			label = "led_wan_2p5g";
+			gpios = <&pio 3 GPIO_ACTIVE_LOW>;
+		};
+
+		led_wan_1g: led@2 {
+			label = "led_wan_1g";
+			gpios = <&pio 5 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	gpio-export {
+		compatible = "gpio-export";
+		#size-cells = <0>;
+
+		usb {
+			gpio-export,name = "usb_power";
+			gpio-export,output = <0>;
+			gpios = <&pio 6 GPIO_ACTIVE_LOW>;
+		};
+	};
+
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "fixed-3.3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		regulator-boot-on;
+		regulator-always-on;
+	};
+
+	rtl8373n {
+		compatible = "realtek,rtl8373n";
+		mediatek,mdio = <&mdio>;
+		mediatek,reset-pin = <&pio 8 GPIO_ACTIVE_HIGH>;
+		interrupt-parent = <&pio>;
+		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+		status = "okay";
+	};
+};
+
+&i2c0 {
+	status = "okay";
+	rtl8238b: rtl8238b@20 {
+		compatible = "realtek,rtl8238b";
+		reg = <0x20>;
+	};
+};
+
+&spi1 {
+	status = "disabled";
+};
+
+&spi2 {
+	status = "okay";
+
+	spi_nor: spi_nor@0 {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		compatible = "jedec,spi-nor";
+		reg = <0>;
+		spi-max-frequency = <52000000>;
+		spi-tx-bus-width = <4>;
+		spi-rx-bus-width = <4>;
+		partitions {
+			compatible = "fixed-partitions";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			partition@00000 {
+				label = "BL2";
+				reg = <0x00000 0x0080000>;
+				read-only;
+			};
+
+			partition@40000 {
+				label = "u-boot-env";
+				reg = <0x80000 0x0010000>;
+			};
+
+			art: partition@90000 {
+				label = "art";
+				reg = <0x90000 0x0010000>;
+
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					macaddr_base: macaddr@0 {
+						reg = <0x0 0x6>;
+						compatible = "mac-base";
+						#nvmem-cell-cells = <1>;
+					};
+				};
+			};
+
+			partition@100000 {
+				label = "FIP";
+				reg = <0xa0000 0x0200000>;
+				read-only;
+			};
+		};
+	};
+};
+
+&mmc0 {
+	pinctrl-names = "default", "state_uhs";
+	pinctrl-0 = <&mmc_pins_default>;
+	pinctrl-1 = <&mmc_pins_uhs>;
+	bus-width = <8>;
+	max-frequency = <48000000>;
+	cap-mmc-highspeed;
+	vmmc-supply = <&reg_3p3v>;
+	non-removable;
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+};
+
+&gmac0 {
+	compatible = "mediatek,eth-mac";
+	reg = <0>;
+	mac-type = "gdm";
+	phy-mode = "2500base-x";
+	phy-handle = <&phy11>;
+	status = "okay";
+	nvmem-cells = <&macaddr_base 1>;
+	nvmem-cell-names = "mac-address";
+};
+
+&gmac1 {
+	phy-mode = "internal";
+	phy-handle = <&phy15>;
+	status = "okay";
+	nvmem-cells = <&macaddr_base 0>;
+	nvmem-cell-names = "mac-address";
+};
+
+&mdio {
+	phy11: phy@11 {
+		compatible = "ethernet-phy-id03a2.a411";
+		reg = <11>;
+		phy-mode = "2500base-x";
+		airoha,polarity = <1>;
+		airoha,surge = <0>;
+		airoha,phy-handle;
+		reset-gpios = <&pio 42 GPIO_ACTIVE_LOW>;
+		reset-assert-us = <10000>;
+		reset-deassert-us = <10000>;
+	};
+
+	phy15: phy@15 {
+		pinctrl-names = "i2p5gbe-led";
+		pinctrl-0 = <&i2p5gbe_led0_pins>;
+		compatible = "ethernet-phy-ieee802.3-c45";
+		reg = <15>;
+		phy-mode = "internal";
+	};
+};
+
+&pcie0 {
+	status = "disabled";
+};
+
+&pcie1 {
+	status = "disabled";
+};
+
+&ssusb {
+	status = "okay";
+};
+
+&tphyu3port0 {
+	status = "okay";
+};
+
+&uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_pins>;
+	status = "okay";
+};
