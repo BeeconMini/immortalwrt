@@ -266,6 +266,7 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART=ubi
 		nand_do_upgrade "$1"
 		;;
+	beeconmini,seed-ac2|\
 	beeconmini,seed-ac1)
 		CI_KERNPART="kernel"
 		CI_ROOTPART="rootfs"
@@ -364,6 +365,7 @@ platform_copy_config() {
 	airpi,ap3000m|\
 	arcadyan,mozart|\
 	beeconmini,seed-ac1|\
+	beeconmini,seed-ac2|\
 	glinet,gl-mt2500|\
 	glinet,gl-mt2500-airoha|\
 	glinet,gl-mt6000|\
