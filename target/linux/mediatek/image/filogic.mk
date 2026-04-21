@@ -835,6 +835,16 @@ define Device/beeconmini_seed-ac2
 endef
 TARGET_DEVICES += beeconmini_seed-ac2
 
+define Device/beeconmini_seed-ac3
+  DEVICE_VENDOR := BeeconMini
+  DEVICE_MODEL := SEED AC3
+  DEVICE_DTS := mt7986a-beeconmini-seed-ac3
+  DEVICE_DTS_DIR := ../dts
+  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs kmod-switch-rtl8373n-ac3 kmod-usb3 mt7986-wo-firmware
+  IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
+endef
+TARGET_DEVICES += beeconmini_seed-ac3
+
 define Device/buffalo_wsr-6000ax8
   DEVICE_MODEL := WSR-6000AX8
   DEVICE_VENDOR := Buffalo
