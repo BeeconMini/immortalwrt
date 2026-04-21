@@ -297,6 +297,7 @@ platform_do_upgrade() {
 		CI_ROOT_UBIPART=ubi
 		nand_do_upgrade "$1"
 		;;
+	beeconmini,seed-ac5|\
 	beeconmini,seed-ac3|\
 	beeconmini,seed-ac2|\
 	beeconmini,seed-ac1)
@@ -406,6 +407,7 @@ platform_copy_config() {
 	beeconmini,seed-ac1|\
 	beeconmini,seed-ac2|\
 	beeconmini,seed-ac3|\
+	beeconmini,seed-ac5|\
 	glinet,gl-mt2500|\
 	glinet,gl-mt2500-airoha|\
 	glinet,gl-mt6000|\
