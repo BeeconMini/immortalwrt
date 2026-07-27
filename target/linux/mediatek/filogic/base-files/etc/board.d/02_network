@@ -238,6 +238,8 @@ mediatek_setup_interfaces()
 	beeconmini,seed-ac2)
 		ucidef_set_interfaces_lan_wan eth0 eth1
 		;;
+	beeconmini,seed-ac5s|\
+	beeconmini,seed-ac5s-nor|\
 	beeconmini,seed-ac5|\
 	beeconmini,seed-ac3)
 		ucidef_set_interfaces_lan_wan eth1 eth0
@@ -343,6 +345,8 @@ mediatek_setup_macs()
 	yuncore,ax835)
 		label_mac=$(mtd_get_mac_binary "Factory" 0x4)
 		;;
+	beeconmini,seed-ac5s|\
+	beeconmini,seed-ac5s-nor|\
 	beeconmini,seed-ac5|\
 	beeconmini,seed-ac3|\
 	beeconmini,seed-ac2|\

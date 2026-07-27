@@ -65,6 +65,8 @@ bazis,ax3000wm)
 beeconmini,seed-ac1)
 	ucidef_set_led_netdev "wan" "WAN" "led_wan" "eth1" "link tx rx"
 	;;
+beeconmini,seed-ac5s|\
+beeconmini,seed-ac5s-nor|\
 beeconmini,seed-ac5)
 	ucidef_set_led_netdev "wan1g" "WAN 1G" "led_wan_1g" "eth0" "link_10 link_100 link_1000"
 	ucidef_set_led_netdev "wan2p5g" "WAN 2P5G" "led_wan_2p5g" "eth0" "link_2500"
