@@ -830,7 +830,7 @@ define Device/beeconmini_seed-ac2
   DEVICE_MODEL := SEED AC2
   DEVICE_DTS := mt7981b-beeconmini-seed-ac2
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs kmod-switch-rtl8373 mt7981-wo-firmware
+  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs bmgsw mt7981-wo-firmware
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 TARGET_DEVICES += beeconmini_seed-ac2
@@ -840,7 +840,7 @@ define Device/beeconmini_seed-ac3
   DEVICE_MODEL := SEED AC3
   DEVICE_DTS := mt7986a-beeconmini-seed-ac3
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs kmod-switch-rtl8373n-ac3 kmod-usb3 mt7986-wo-firmware
+  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs bmgsw kmod-usb3 mt7986-wo-firmware
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 TARGET_DEVICES += beeconmini_seed-ac3
@@ -850,7 +850,7 @@ define Device/beeconmini_seed-ac5
   DEVICE_MODEL := SEED AC5
   DEVICE_DTS := mt7987a-beeconmini-seed-ac5
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs kmod-switch-rtl8373n-ac5 kmod-usb3 mt7987-2p5g-phy-firmware kmod-phy-airoha-en8811h
+  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs bmgsw kmod-usb3 mt7987-2p5g-phy-firmware kmod-phy-airoha-en8811h
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 TARGET_DEVICES += beeconmini_seed-ac5
@@ -860,7 +860,7 @@ define Device/beeconmini_seed-ac5s
   DEVICE_MODEL := SEED AC5S
   DEVICE_DTS := mt7987a-beeconmini-seed-ac5s
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs nvme-cli kmod-nvme kmod-switch-rtl8373n-ac5s kmod-usb3 mt7987-2p5g-phy-firmware kmod-phy-airoha-en8811h
+  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs nvme-cli kmod-nvme bmgsw kmod-usb3 mt7987-2p5g-phy-firmware kmod-phy-airoha-en8811h
   IMAGE/sysupgrade.bin := sysupgrade-tar | append-metadata
 endef
 TARGET_DEVICES += beeconmini_seed-ac5s
@@ -871,7 +871,7 @@ define Device/beeconmini_seed-ac5s-nor
   DEVICE_VARIANT := (NOR)
   DEVICE_DTS := mt7987a-beeconmini-seed-ac5s-nor
   DEVICE_DTS_DIR := ../dts
-  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs nvme-cli kmod-nvme kmod-switch-rtl8373n-ac5s kmod-usb3 mt7987-2p5g-phy-firmware kmod-phy-airoha-en8811h
+  DEVICE_PACKAGES := kmod-fs-f2fs kmod-fs-ext4 mkf2fs e2fsprogs nvme-cli kmod-nvme bmgsw kmod-usb3 mt7987-2p5g-phy-firmware kmod-phy-airoha-en8811h
   IMAGES := sysupgrade.bin
   IMAGE_SIZE := 30336k
   KERNEL := kernel-bin | lzma | \
